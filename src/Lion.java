@@ -1,9 +1,8 @@
 public class Lion extends Animal {
     String eyes;
 
-    public Lion(String name, String eyes) {
+    public Lion(String name) {
         super(name);
-        this.eyes = eyes;
     }
 
     public String getEyes() {
