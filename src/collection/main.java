@@ -10,16 +10,12 @@ public class main {
     public static void main(String[] args) {
 
         ArrayList<String> list = new ArrayList<String>();
-
         for (int i = 0; i < 10; i++) {
             list.add("name" + i);
         }
 
-
-
         TreeSet<String> treeSet = new TreeSet<String>();
-
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 10; i++) {
             treeSet.add("name" + i);
         }
 
@@ -31,7 +27,15 @@ public class main {
             hashSet.add("name" + i);
         }
 
-        System.out.println(hashSet.containsAll(list));
+        for (Object hash : hashSet) {
+
+            hash.hashCode()
+            hash.equals()
+
+        }
+
+
+
 
     }
 }
