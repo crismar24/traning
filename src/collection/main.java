@@ -5,36 +5,46 @@ import java.util.List;
 
 public class main {
     public static void main(String[] args) {
-
+        // List
+        System.out.println("//_ List _//");
         ArrayList<String> arrayList = new ArrayList<String>();
         for (int i = 0; i < 10; i++) {
             arrayList.add("name" + i);
         }
-        System.out.println("arrayList \n\r" + arrayList);
+        arrayList.add("name777" );
+        System.out.println("_ arrayList _ \n\r" + arrayList);
 
-        SortedSet sortedSet = new TreeSet<Integer>();
+        LinkedList<String> linkedList = new LinkedList<String>();
         for (int i = 0; i < 10; i++) {
-            sortedSet.add("name" + i);
+            linkedList.add("name" + i);
         }
-        System.out.println("sortedSet \n\r" + sortedSet);
+        linkedList.add("name777" );
+        System.out.println("_ linkedList _ \n\r" + linkedList);
+
+        // Set
+        System.out.println("//_ Set _//");
+        HashSet<String> hashSet = new HashSet<String>();
+        for (int i = 0; i < 10; i++) {
+            hashSet.add("name" + i);
+        }
+        hashSet.add("name777" );
+        System.out.println("_ hashSet _ \n\r" + hashSet);
+        for (String s : hashSet) {
+            System.out.print(s.hashCode() + ", ");
+        }
 
         TreeSet<String> treeSet = new TreeSet<String>();
         for (int i = 0; i < 10; i++) {
             treeSet.add("name" + i);
         }
-        System.out.println("treeSet \n\r" + treeSet );
+        treeSet.add("name777" );
+        System.out.println("_ treeSet _ \n\r" + treeSet );
 
-        //Хорош для поиска дубликатов
-        HashSet hashSet = new HashSet();
+        LinkedHashSet<String> linkedHashSet = new LinkedHashSet<String>();
         for (int i = 0; i < 10; i++) {
-            hashSet.add("name" + i);
+            linkedHashSet.add("name" + i);
         }
-        System.out.println("hashSet \n\r" + hashSet);
-
-        List<Integer> integerList = new ArrayList<Integer>();
-
-
-
-
+        linkedHashSet.add("name777" );
+        System.out.println("_ linkedHashSet _ \n\r" + linkedHashSet );
     }
 }
