@@ -29,9 +29,7 @@ public class main {
         }
         hashSet.add("name777" );
         System.out.println("_ hashSet _ \n\r" + hashSet);
-//        for (String s : hashSet) {
-//            System.out.print(s.hashCode() + ", ");
-//        }
+
 
         TreeSet<String> treeSet = new TreeSet<String>();
         for (int i = 0; i < 10; i++) {
