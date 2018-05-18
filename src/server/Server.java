@@ -10,44 +10,71 @@ import java.util.ArrayList;
 public class Server extends JFrame {
 
     private int port = 7777;
-    private JTextArea chatWindow;
-    private ArrayList<Connection> connectionList = new ArrayList<Connection>();
+
+    private static JTextArea chatWindow;
+    private ArrayList<String> connectionList = new ArrayList<String>();
     private ServerSocket serverSocket;
 
     public Server() throws HeadlessException, IOException {
-        serverSocket = new ServerSocket(port);
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super("Серверная часть.");
+        JPanel mainPanel = new JPanel();
         setSize(new Dimension(300, 600));
-
         chatWindow = new JTextArea();
-
+        // Параметры переноса слов
+        chatWindow.setLineWrap(true);
+        chatWindow.setWrapStyleWord(true);
+        JScrollPane sp = new JScrollPane(chatWindow);
+        sp.createVerticalScrollBar();
+        mainPanel.add(sp, BorderLayout.CENTER);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
     public void start() {
-        Socket socketConnection = waitForConnection(serverSocket);
-
-        Connection userConnection = new Connection(socketConnection);
-        addUserList(userConnection);
-        /// userConnection.start(); - нужен ли ? userConnection по идеи а так как Thread ?
-        userConnection.openStreams();
-        userConnection
-        showMessage(message);
-
-    }
-
-    private Socket waitForConnection(ServerSocket serverSocket) {
         try {
-            return serverSocket.accept();
+            serverSocket = new ServerSocket(port, 100);
+            //получить Соединение с юзером когда оно появится
+            Socket socketConnection = waitForConnection();
+
+            // проверить есть ли уже такой ip сокета в connectionList
+            // если нет, тогда добавляем в connectionList и создаем новый поток-подключение userConnection
+            if (!connectionList.contains(socketConnection.getInetAddress().getHostAddress())) {
+                //Добавим подключение пользователя,если его еще нет в массиве (mb HashSet ?)
+                addUserList(socketConnection.getInetAddress().getHostAddress());
+
+                showMessage("\nСоединен с " + socketConnection.getInetAddress().getHostAddress());
+                Connection userConnection = new Connection(socketConnection);
+
+                //новый поток. Подключение одного пользователя держим в отдельном потоке
+                userConnection.start();
+                // в start получение данных ?...
+            }
         } catch (IOException e) {
-            showMessage("Не могу получить соединение");
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
-    private synchronized void addUserList(Connection userConnection) {
-        connectionList.add(userConnection);
+    public synchronized static void showMessage(final String message) {
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+                chatWindow.append("\n" + message);
+//            }
+//        })
+        ;
+
+    }
+
+    private void addUserList(String socketConnectionAddress) {
+        connectionList.add(socketConnectionAddress);
+    }
+
+    // ожидание соединения и отображение информации о подключении
+    private Socket waitForConnection() throws IOException {
+        Server.showMessage("\nОжидание подключения клиентов...");
+        Socket socketConnection = serverSocket.accept();
+
+        Server.showMessage("\nСоединен с " + socketConnection.getInetAddress().getAddress());
+        return socketConnection;
     }
 
 }
