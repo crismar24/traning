@@ -50,6 +50,7 @@ public class Server extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public synchronized static void showMessage(final String message) {

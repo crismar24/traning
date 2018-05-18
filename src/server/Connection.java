@@ -24,8 +24,39 @@ public class Connection extends Thread {
 
     @Override
     public void run() {
-        setupStreams();
-        whileChatting();
+        try {
+            setupStreams();
+            whileChatting();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // обработка данных во время обращения
+    private void whileChatting() throws IOException {
+        String message = "Подключен пользователь "+socket.getInetAddress().getHostAddress();
+        sendMessage(message);
+        do {
+            try {
+                message = (String) inputStream.readObject();
+                Server.showMessage("\n"+message);
+            } catch (ClassNotFoundException classNotFoundException) {
+                Server.showMessage("\nНе пойму что за хрень отправил пользователь !");
+            }
+
+        }
+        while ();
+    }
+
+    // закрываем сокеты и потоки когда пользователь начатился
+    private void closeConnection(){
+        try {
+            outputStream.close();
+            inputStream.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
