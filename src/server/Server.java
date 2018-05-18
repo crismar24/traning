@@ -36,16 +36,14 @@ public class Server extends JFrame {
             //получить Соединение с юзером когда оно появится
             Socket socketConnection = waitForConnection();
 
-            // проверить есть ли уже такой ip сокета в connectionList
-            // если нет, тогда добавляем в connectionList и создаем новый поток-подключение userConnection
+            // проверить есть ли уже такой ip сокета в connectionList, если нет, тогда добавляем в connectionList и создаем новый поток-подключение userConnection
             if (!connectionList.contains(socketConnection.getInetAddress().getHostAddress())) {
                 //Добавим подключение пользователя,если его еще нет в массиве (mb HashSet ?)
                 addUserList(socketConnection.getInetAddress().getHostAddress());
-
                 showMessage("\nСоединен с " + socketConnection.getInetAddress().getHostAddress());
-                Connection userConnection = new Connection(socketConnection);
 
                 //новый поток. Подключение одного пользователя держим в отдельном потоке
+                Connection userConnection = new Connection(socketConnection);
                 userConnection.start();
                 // в start получение данных ?...
             }
