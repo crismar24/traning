@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Server extends JFrame implements Runnable {
+public class Server extends JFrame {
 
     private int port = 7777;
     private JTextArea chatWindow;
@@ -25,7 +25,7 @@ public class Server extends JFrame implements Runnable {
         setVisible(true);
     }
 
-    public void run() {
+    public void start() {
         Socket socketConnection = waitForConnection(serverSocket);
 
         Connection userConnection = new Connection(socketConnection);
@@ -33,8 +33,17 @@ public class Server extends JFrame implements Runnable {
         /// userConnection.start(); - нужен ли ? userConnection по идеи а так как Thread ?
         userConnection.openStreams();
         userConnection
+        showMessage(message);
 
+    }
 
+    private Socket waitForConnection(ServerSocket serverSocket) {
+        try {
+            return serverSocket.accept();
+        } catch (IOException e) {
+            showMessage("Не могу получить соединение");
+            //e.printStackTrace();
+        }
     }
 
     private synchronized void addUserList(Connection userConnection) {
