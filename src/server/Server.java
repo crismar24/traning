@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class Server extends JFrame implements Runnable {
@@ -25,11 +26,13 @@ public class Server extends JFrame implements Runnable {
     }
 
     public void run() {
-        waitForConnection(serverSocket);
-        Connection userConnection = new Connection();
+        Socket socketConnection = waitForConnection(serverSocket);
+
+        Connection userConnection = new Connection(socketConnection);
         addUserList(userConnection);
         /// userConnection.start(); - нужен ли ? userConnection по идеи а так как Thread ?
         userConnection.openStreams();
+        userConnection
 
 
     }

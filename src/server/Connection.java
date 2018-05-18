@@ -1,10 +1,16 @@
 package server;
 
 import java.io.*;
+import java.net.Socket;
 
 public class Connection extends Thread {
-    OutputStream outputStream;
-    InputStream inputStream;
+    private OutputStream outputStream;
+    private InputStream inputStream;
+    private Socket socket;
+
+    public Connection(Socket socket) {
+        this.socket = socket;
+    }
 
     public void openStreams() {
 
