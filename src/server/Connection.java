@@ -39,13 +39,22 @@ public class Connection extends Thread {
         do {
             try {
                 message = (String) inputStream.readObject();
-                Server.showMessage("\n"+message);
+                Server.showMessage("\n" + message);
             } catch (ClassNotFoundException classNotFoundException) {
                 Server.showMessage("\nНе пойму что за хрень отправил пользователь !");
             }
-
+        } while (!message.equals("КЛИЕНТ - *"));
+    }
+    // отправка сообщений клиенту
+    private void sendMessage(String message) {
+        try {
+            outputStream.writeObject(message);
+            outputStream.flush();
+            Server.showMessage("\n"+message);
+        } catch (IOException e) {
+            Server.showMessage("\nОШИБКА: ЧУВАК, Я НЕ МОГУ ЭТО ИСПРАВИТЬ!!!");
+            //e.printStackTrace();
         }
-        while ();
     }
 
     // закрываем сокеты и потоки когда пользователь начатился

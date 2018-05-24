@@ -17,26 +17,27 @@ public class Server extends JFrame {
 
     public Server() throws HeadlessException, IOException {
         super("Серверная часть.");
-        JPanel mainPanel = new JPanel();
         setSize(new Dimension(300, 600));
         chatWindow = new JTextArea();
         // Параметры переноса слов
         chatWindow.setLineWrap(true);
         chatWindow.setWrapStyleWord(true);
+        chatWindow.setEditable(false);
         JScrollPane sp = new JScrollPane(chatWindow);
         sp.createVerticalScrollBar();
-        mainPanel.add(sp, BorderLayout.CENTER);
+        add(sp);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
     public void start() {
         try {
+            showMessage("Server is starting..");
             serverSocket = new ServerSocket(port, 100);
             //получить Соединение с юзером когда оно появится
             Socket socketConnection = waitForConnection();
 
-            // проверить есть ли уже такой ip сокета в connectionList, если нет, тогда добавляем в connectionList и создаем новый поток-подключение userConnection
+            // TODO проверить есть ли уже такой ip сокета в connectionList, если нет, тогда добавляем в connectionList и создаем новый поток-подключение userConnection
             if (!connectionList.contains(socketConnection.getInetAddress().getHostAddress())) {
                 //Добавим подключение пользователя,если его еще нет в массиве (mb HashSet ?)
                 addUserList(socketConnection.getInetAddress().getHostAddress());

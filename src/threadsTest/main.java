@@ -6,6 +6,6 @@ public class main {
     RunnebleRun runnebleRun = new RunnebleRun();
 
     Thread t1 = new Thread(new RunnebleRun());
-    threadRunneble
+    //threadRunneble
 
 }
